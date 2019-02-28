@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <title> main window </title>
+ 
+  <script type="text/javascript">
+  
+  // exec iframe function
+  function exec_iframe(){
+  
+    var request = {};
+    request.input = {};  
+    request.input.loginId = localStorage.getItem('name');
+    request.input.password = localStorage.getItem('pw');
+    // iframe内へメッセージを送信
+    $('.child-iframe')[0].contentWindow.postMessage(request, 'http://dummy.oneslogi.com:8080');
+    
+	if(typeof(exec_obj)=='undefined'){
+		exec_obj = document.createElement('iframe');
+		exec_obj.name = 'tmp_frame';
+		exec_obj.src = 'http://dummy.oneslogi.com:8080/wms/SsoExec.html';
+		exec_obj.style.display = 'none';
+		document.body.appendChild(exec_obj);
+	}else{
+		exec_obj.src = 'http://dummy.oneslogi.com:8080/wms/SsoExec.html?' + Math.random();
+	}
+  }
+  </script>
+ 
+ </head>
+ 
+ <body>
+  <p>メインメニュー</p>
+  <p><input type="button" value="WMSへ" onclick="exec_iframe()"></p>
+  <iframe class="child-iframe" src="http://dummy.oneslogi.com:8080/wms/Sso.html" name="myframe" width="0" height="0" style="display:none" ></iframe>
+ </body>
+</html>

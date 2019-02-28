@@ -1,0 +1,9 @@
+1.window環境のhostファイルにテスト用のドメインを追加する。
+IPアドレス     dummy.oneslogi.com
+
+2.sampleのプロジェクトをTomcatにディプロイする。
+
+3.以下のURLでテストする。
+
+上位：http://localhost:8080/sample/login.html
+ WMS：http://dummy.oneslogi.com:8080/wms/

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+
+
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<div class="container">
+    Login ID:<input ng-model="name" type="text" placeholder="Login ID" />
+    Password:<input ng-model="pw" type="password" placeholder="Password" />
+</div>
+
+<button ng-click="redirectToMainMenu()"><font size="5" color="#333399">Login</font></button>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', ['$scope', '$window',
+    function($scope, $window) {
+        $scope.redirectToMainMenu = function(){
+        
+        
+        localStorage.setItem('name',$scope.name);
+    	localStorage.setItem('pw',$scope.pw);
+    	
+        $window.open('http://localhost:8080/sample/mainMenu.html', '_blank');
+        
+        };
+    }
+]);
+
+
+</script>
+
+</body>
+</html>
+
