@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<title>iframe window</title>
+
+<script type="text/javascript">
+	var loginId;
+	var password;
+
+	$(function() {
+
+		// メッセージを受信したとき
+		$(window).on('message', function(event) {
+			// クロスサイトリクエストフォージェリ対策（送信元の検証）
+			if (event.originalEvent.origin != 'http://localhost:8080')
+				return;
+			loginId = event.originalEvent.data.input.loginId;
+			password = event.originalEvent.data.input.password;
+		});
+	});
+
+	function fIframe() {
+		var request = {};
+		request.input = {};
+		request.input.loginId = loginId;
+		request.input.password = password;
+		request.input.screenCd = "LiteLogin";
+		request.input.cultureCd = "ja-JP";
+		request.input.loginIdItemCd = "loginId";
+		request.input.passwordItemCd = "password";
+		var inputs = JSON.stringify(request);
+
+		$.ajax({
+					url : "http://dummy.oneslogi.com:8080/wms/resources/authentication/lite/login",
+					type : "post",
+					data : inputs,
+					contentType : "application/json;charset=utf-8",
+					success : function(response, data) {
+
+					    if (!response.result.processStatus) {
+					    	alert("認証エラー: " + response.result.processMessageNms);
+					    }
+						window.open("http://dummy.oneslogi.com:8080/wms/#/base/menu/MainMenu");
+					},
+				    error: function (response) {
+					    alert("エラー: " + response);
+					}
+				})
+	}
+</script>
+</head>
+
+<body>
+	<p>wms login page</p>
+</body>
+</html>
+
